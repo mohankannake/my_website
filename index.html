@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mohan Kannake — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --paper:#fdfcf9;--cream:#f8f5ef;--sage:#e8f0e4;--sage2:#d4e6cc;
+  --g1:#2d6a4f;--g2:#40916c;--g3:#74c69d;--g4:#b7e4c7;--g5:#d8f3dc;
+  --text:#1a2e1e;--muted:#5a7060;
+  --border:rgba(45,106,79,.12);
+  --shadow:0 4px 24px rgba(45,106,79,.08);
+  --shadow-lg:0 12px 48px rgba(45,106,79,.14);
+  --fd:'Playfair Display',Georgia,serif;
+  --fb:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--text);font-family:var(--fb);font-size:14px;line-height:1.6;overflow-x:hidden;min-height:100vh}
+
+/* canvases */
+#leaf-cv,#bird-cv{position:fixed;inset:0;z-index:0;pointer-events:none}
+#leaf-cv{opacity:.5}
+
+/* flower field */
+#flower-field{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.flower{position:absolute;bottom:0;transform-origin:bottom center;opacity:0;animation:riseFlower 1.8s cubic-bezier(.22,1,.36,1) forwards;animation-delay:var(--fd,0s)}
+@keyframes riseFlower{to{opacity:1;transform:translateY(0)}}
+.flower-stem{width:2px;margin:0 auto;background:linear-gradient(to top,#2d6a4f,#74c69d);border-radius:2px;position:relative;transform-origin:bottom center;animation:stemSway 4s ease-in-out infinite alternate;animation-delay:var(--sd,0s)}
+@keyframes stemSway{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+.flower-head{position:absolute;top:-2px;left:50%;transform:translateX(-50%)}
+.petal{position:absolute;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;transform-origin:bottom center;opacity:0;animation:bloomPetal 1.4s cubic-bezier(.34,1.56,.64,1) forwards;animation-delay:var(--pd,0s)}
+@keyframes bloomPetal{0%{transform:rotate(var(--pr)) scale(0);opacity:0}70%{opacity:.95}100%{transform:rotate(var(--pr)) scale(1);opacity:.88}}
+.fcenter{position:absolute;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);animation:popC .5s cubic-bezier(.34,1.56,.64,1) forwards;animation-delay:var(--cd,1.2s)}
+@keyframes popC{to{transform:translate(-50%,-50%) scale(1)}}
+
+/* layout */
+.page{position:relative;z-index:1;display:grid;grid-template-columns:300px 1fr;min-height:100vh}
+
+/* sidebar */
+.sidebar{background:linear-gradient(175deg,var(--g1) 0%,#1b4332 100%);padding:2.5rem 2rem;display:flex;flex-direction:column;gap:2rem;position:sticky;top:0;height:100vh;overflow-y:auto}
+.avatar{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--g3),var(--g4));border:3px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:2.8rem;margin:0 auto;box-shadow:0 0 0 6px rgba(116,198,157,.15);animation:breathe 5s ease-in-out infinite}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 6px rgba(116,198,157,.15)}50%{box-shadow:0 0 0 14px rgba(116,198,157,.08)}}
+.aname{font-family:var(--fd);font-size:1.4rem;font-weight:700;color:#fff;text-align:center;line-height:1.2;margin-top:.6rem}
+.atitle{font-size:.72rem;color:var(--g3);text-align:center;letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+.snav{display:flex;flex-direction:column;gap:.2rem}
+.ni{display:flex;align-items:center;gap:.75rem;padding:.6rem .9rem;border-radius:10px;color:rgba(255,255,255,.65);font-size:.82rem;font-weight:500;text-decoration:none;transition:background .2s,color .2s}
+.ni:hover,.ni.active{background:rgba(255,255,255,.1);color:#fff}
+.ni-ic{font-size:1rem;width:20px;text-align:center}
+.slabel{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);font-weight:600;margin-bottom:.4rem}
+.crow{display:flex;align-items:center;gap:.6rem;font-size:.75rem;color:rgba(255,255,255,.6);padding:.35rem .5rem;word-break:break-all}
+.linkedin-btn{display:flex;align-items:center;justify-content:center;gap:.6rem;background:#0a66c2;color:#fff;text-decoration:none;padding:.65rem 1rem;border-radius:10px;font-size:.8rem;font-weight:600;transition:background .2s,transform .2s;box-shadow:0 2px 12px rgba(10,102,194,.3)}
+.linkedin-btn:hover{background:#084e96;transform:translateY(-1px)}
+.li-ic{width:18px;height:18px;fill:white;flex-shrink:0}
+.ipills{display:flex;flex-wrap:wrap;gap:.4rem}
+.ipill{font-size:.68rem;padding:.25rem .6rem;border-radius:100px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.1)}
+
+/* main */
+.main{background:var(--paper);overflow-y:auto;display:flex;flex-direction:column}
+
+/* hero */
+.hero{background:linear-gradient(135deg,var(--g5) 0%,var(--sage) 40%,#e2f0d5 100%);padding:3rem 3rem 2.5rem;position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
+.hero-trees{position:absolute;bottom:0;right:2rem;font-size:5rem;line-height:1;pointer-events:none;opacity:.18;letter-spacing:-.5rem;animation:treeSway 8s ease-in-out infinite alternate}
+@keyframes treeSway{from{transform:rotate(-1deg) translateX(0)}to{transform:rotate(1deg) translateX(-8px)}}
+.hero-leaf-bg{position:absolute;top:-20px;left:-20px;font-size:9rem;opacity:.06;pointer-events:none;animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(45,106,79,.1);border:1px solid rgba(45,106,79,.2);border-radius:100px;padding:.3rem .9rem;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--g1);margin-bottom:1rem}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--g2);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+.hero-h{font-family:var(--fd);font-size:clamp(2rem,3.5vw,3rem);font-weight:900;line-height:1.05;color:var(--text);letter-spacing:-.02em;margin-bottom:.75rem;animation:slideIn .7s ease both}
+.hero-h em{font-style:normal;background:linear-gradient(135deg,var(--g1),var(--g2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+@keyframes slideIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.hero-sub{color:var(--muted);font-size:.9rem;max-width:520px;line-height:1.75;animation:slideIn .7s .1s ease both}
+.hero-stats{display:flex;gap:2rem;margin-top:2rem;flex-wrap:wrap;animation:slideIn .7s .2s ease both}
+.hstat-num{font-family:var(--fd);font-size:1.8rem;font-weight:700;color:var(--g1);line-height:1}
+.hstat-label{font-size:.68rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:.15rem}
+
+/* content grid */
+.content{padding:0 3rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem}
+.sb{background:#fff;border:1px solid var(--border);border-radius:18px;padding:1.5rem 1.75rem;box-shadow:var(--shadow);transition:box-shadow .3s,transform .3s}
+.sb:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.full{grid-column:1/-1}
+.blabel{display:flex;align-items:center;gap:.5rem;font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g2);margin-bottom:1.1rem}
+.blabel::before{content:'';width:3px;height:14px;border-radius:2px;background:linear-gradient(to bottom,var(--g1),var(--g3))}
+
+/* about */
+.atext{font-size:.85rem;color:var(--muted);line-height:1.8}
+.atext p+p{margin-top:.75rem}
+
+/* education */
+.edu-entry{display:flex;gap:1rem;align-items:flex-start}
+.edu-icon{width:42px;height:42px;flex-shrink:0;border-radius:12px;background:var(--g5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.edu-inst{font-weight:700;font-size:.9rem;color:var(--text)}
+.edu-deg{font-size:.8rem;color:var(--g2);font-weight:500;margin:.15rem 0}
+.edu-year{font-size:.7rem;color:var(--muted)}
+.edu-course{font-size:.75rem;color:var(--muted);margin-top:.4rem;line-height:1.6}
+
+/* experience */
+.exp-list{display:flex;flex-direction:column;gap:1rem}
+.exp-entry{display:flex;gap:1rem;align-items:flex-start;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.exp-entry:last-child{border-bottom:none;padding-bottom:0}
+.exp-ic{width:38px;height:38px;flex-shrink:0;border-radius:10px;background:var(--g5);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.exp-org{font-weight:600;font-size:.88rem;color:var(--text)}
+.exp-role{font-size:.78rem;color:var(--g2);font-weight:500;margin:.1rem 0}
+.exp-period{font-size:.68rem;color:var(--muted);margin-bottom:.35rem}
+.exp-desc{font-size:.78rem;color:var(--muted);line-height:1.65}
+
+/* projects */
+.proj-list{display:flex;flex-direction:column;gap:.9rem}
+.proj-entry{background:var(--sage);border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem;transition:background .2s}
+.proj-entry:hover{background:var(--g5)}
+.proj-yr{font-size:.65rem;color:var(--g2);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem}
+.proj-nm{font-weight:600;font-size:.88rem;color:var(--text);margin-bottom:.2rem}
+.proj-org{font-size:.72rem;color:var(--muted);margin-bottom:.35rem}
+.proj-desc{font-size:.76rem;color:var(--muted);line-height:1.6}
+
+/* skills */
+.skill-rows{display:flex;flex-direction:column;gap:.85rem}
+.skill-row{display:flex;flex-direction:column;gap:.4rem}
+.scat{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g1)}
+.stags{display:flex;flex-wrap:wrap;gap:.35rem}
+.stag{font-size:.72rem;padding:.28rem .65rem;border-radius:8px;background:var(--g5);color:var(--g1);border:1px solid rgba(45,106,79,.15);font-weight:500;transition:background .2s,border-color .2s}
+.stag:hover{background:var(--g4);border-color:var(--g2)}
+
+/* volunteer */
+.vol-entry{background:linear-gradient(135deg,var(--cream),var(--sage));border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem}
+.vol-title{font-weight:600;font-size:.88rem;color:var(--text);margin-bottom:.15rem}
+.vol-period{font-size:.7rem;color:var(--g2);margin-bottom:.35rem;font-weight:500}
+.vol-points{list-style:none;display:flex;flex-direction:column;gap:.3rem}
+.vol-points li{font-size:.78rem;color:var(--muted);line-height:1.6;padding-left:1.2rem;position:relative}
+.vol-points li::before{content:'🌿';position:absolute;left:0;top:0;font-size:.6rem}
+
+/* cta */
+.cta-block{background:linear-gradient(135deg,var(--g1) 0%,#1b4332 100%);border-radius:18px;padding:2rem;grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;position:relative;overflow:hidden}
+.cta-trees{position:absolute;right:-10px;bottom:-10px;font-size:5rem;opacity:.12;pointer-events:none;animation:treeSway 10s ease-in-out infinite alternate}
+.cta-title{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.cta-sub{font-size:.85rem;color:rgba(255,255,255,.65);max-width:380px}
+.cta-btns{display:flex;gap:.75rem;flex-wrap:wrap;flex-shrink:0}
+.cbtn{display:inline-flex;align-items:center;gap:.5rem;padding:.65rem 1.4rem;border-radius:100px;font-size:.8rem;font-weight:600;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.cbtn-p{background:var(--g3);color:var(--text);box-shadow:0 4px 20px rgba(116,198,157,.3)}
+.cbtn-p:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(116,198,157,.4)}
+.cbtn-g{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.cbtn-g:hover{background:rgba(255,255,255,.18)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+.reveal.show{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}
+
+/* responsive */
+@media(max-width:900px){.page{grid-template-columns:1fr}.sidebar{position:static;height:auto}.content{grid-template-columns:1fr;padding:0 1.5rem 2rem}.full,.cta-block{grid-column:1}.cta-block{flex-direction:column}}
+@media(max-width:600px){.hero{padding:2rem 1.5rem}.content{padding:0 1rem 2rem}}
+</style>
+</head>
+<body>
+
+<canvas id="leaf-cv"></canvas>
+<canvas id="bird-cv"></canvas>
+<div id="flower-field"></div>
+
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="avatar">🌿</div>
+      <div class="aname">Mohan<br/>Kannake</div>
+      <div class="atitle">Social Scientist</div>
+    </div>
+
+    <nav class="snav">
+      <a href="#about"      class="ni active"><span class="ni-ic">🌱</span>About</a>
+      <a href="#education"  class="ni"><span class="ni-ic">🎓</span>Education</a>
+      <a href="#experience" class="ni"><span class="ni-ic">💼</span>Experience</a>
+      <a href="#projects"   class="ni"><span class="ni-ic">🔬</span>Projects</a>
+      <a href="#skills"     class="ni"><span class="ni-ic">⚡</span>Skills</a>
+      <a href="#volunteer"  class="ni"><span class="ni-ic">🤝</span>Volunteer</a>
+      <a href="#contact"    class="ni"><span class="ni-ic">✉️</span>Contact</a>
+    </nav>
+
+    <div>
+      <div class="slabel">Contact</div>
+      <div class="crow"><span>✉️</span>mohan.kannake9@gmail.com</div>
+      <div class="crow"><span>📞</span>+91 98234 43861</div>
+      <div class="crow"><span>📍</span>Wardha, Maharashtra</div>
+    </div>
+
+    <a href="https://www.linkedin.com/in/mohan-kannake" target="_blank" class="linkedin-btn">
+      <svg class="li-ic" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      Connect on LinkedIn
+    </a>
+
+    <a href="Mohan_Kannake_Resume.pdf" download="Mohan_Kannake_Resume.pdf" style="display:flex;align-items:center;justify-content:center;gap:.6rem;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;padding:.65rem 1rem;border-radius:10px;font-size:.8rem;font-weight:600;border:1px solid rgba(255,255,255,.2);transition:background .2s,transform .2s" onmouseover="this.style.background='rgba(255,255,255,.18)';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='rgba(255,255,255,.1)';this.style.transform='none'">
+      <svg style="width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download Resume
+    </a>
+
+    <div>
+      <div class="slabel">Research Interests</div>
+      <div class="ipills">
+        <span class="ipill">Social Justice</span>
+        <span class="ipill">Rural Dev.</span>
+        <span class="ipill">Environment</span>
+        <span class="ipill">Public Policy</span>
+        <span class="ipill">Dalit Studies</span>
+        <span class="ipill">Democracy</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- Hero -->
+    <div class="hero" id="about">
+      <div class="hero-leaf-bg">🍃</div>
+      <div class="hero-trees">🌳🌲🌿🌳</div>
+      <div class="hero-tag"><div class="dot"></div>Available for Opportunities</div>
+      <h1 class="hero-h">Rooted in Community,<br/><em>Driven by Purpose</em></h1>
+      <p class="hero-sub">Social Sciences graduate from TISS with experience in grassroots research, rural community engagement, sustainability initiatives, and academic administration across Maharashtra &amp; Rajasthan.</p>
+      <div class="hero-stats">
+        <div class="hstat"><div class="hstat-num" data-count="20">0</div><div class="hstat-label">Interviews Conducted</div></div>
+        <div class="hstat"><div class="hstat-num" data-count="24">0</div><div class="hstat-label">Villages Reached</div></div>
+        <div class="hstat"><div class="hstat-num" data-count="3">0</div><div class="hstat-label">Field Internships</div></div>
+        <div class="hstat"><div class="hstat-num" data-count="4">0</div><div class="hstat-label">Years at TISS</div></div>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="content">
+
+      <div class="sb reveal" id="education">
+        <div class="blabel">Education</div>
+        <div class="edu-entry">
+          <div class="edu-icon">🎓</div>
+          <div>
+            <div class="edu-inst">Tata Institute of Social Sciences (TISS)</div>
+            <div class="edu-deg">Bachelor of Arts in Social Sciences</div>
+            <div class="edu-year">Tuljapur, Maharashtra · 2021 – 2024</div>
+            <div class="edu-course"><strong>Coursework:</strong> Sociology, Economics, Political Science, Mathematics, Research Methodology, English, Marathi</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sb reveal d1">
+        <div class="blabel">About Me</div>
+        <div class="atext">
+          <p>Committed Social Sciences graduate with a deep belief in grassroots action. My work bridges qualitative research, rural community engagement, and institutional sustainability — always rooted in empathy and evidence.</p>
+          <p>From documenting oral histories in Wardha to interviewing MGNREGA women workers in Rajasthan, I bring field discipline and genuine care to every engagement.</p>
+          <p>Currently at <strong>Nalanda Academy</strong>, advancing environmental and digital initiatives alongside core academic operations.</p>
+        </div>
+      </div>
+
+      <div class="sb full reveal" id="experience">
+        <div class="blabel">Experience</div>
+        <div class="exp-list">
+          <div class="exp-entry">
+            <div class="exp-ic">🌱</div>
+            <div>
+              <div class="exp-org">Nalanda Academy</div>
+              <div class="exp-role">Management &amp; Sustainability Intern</div>
+              <div class="exp-period">📍 Wardha, Maharashtra · Aug 2024 – Present</div>
+              <div class="exp-desc">Managed academic &amp; administrative operations. Organised tree plantation drives and environmental campaigns. Facilitated renewable energy (solar &amp; biogas) awareness sessions. Led digital transformation reducing paper workflows.</div>
+            </div>
+          </div>
+          <div class="exp-entry">
+            <div class="exp-ic">✊</div>
+            <div>
+              <div class="exp-org">Mazdoor Kisan Shakti Sangathan (MKSS)</div>
+              <div class="exp-role">Research &amp; Outreach Intern</div>
+              <div class="exp-period">📍 Rajasthan, India · Oct – Nov 2023</div>
+              <div class="exp-desc">Conducted qualitative interviews with 20+ women MGNREGA workers. Assisted in grassroots campaigns on RTI, local democracy, and rural labour rights.</div>
+            </div>
+          </div>
+          <div class="exp-entry">
+            <div class="exp-ic">⚖️</div>
+            <div>
+              <div class="exp-org">Osmanabad Police Department</div>
+              <div class="exp-role">Case Study Intern</div>
+              <div class="exp-period">📍 Osmanabad, Maharashtra · 2022</div>
+              <div class="exp-desc">Studied SC/ST atrocity cases via structured interviews. Analysed socio-legal barriers and prepared institutional study reports.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sb reveal" id="projects">
+        <div class="blabel">Academic Projects</div>
+        <div class="proj-list">
+          <div class="proj-entry">
+            <div class="proj-yr">2019 – 2020</div>
+            <div class="proj-nm">Oral History Research Project</div>
+            <div class="proj-org">Nalanda Academy · Wardha</div>
+            <div class="proj-desc">Interviewed 20+ elderly individuals from marginalised communities. Documented caste discrimination, rural livelihoods, and social exclusion for academic archival.</div>
+          </div>
+          <div class="proj-entry">
+            <div class="proj-yr">2023</div>
+            <div class="proj-nm">Experiential Rural Field Study</div>
+            <div class="proj-org">TISS Tuljapur · Nandgaon Village</div>
+            <div class="proj-desc">Observed gram panchayat functioning and rural governance. Field interviews on socio-economic disparities and public service access.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sb reveal d1" id="skills">
+        <div class="blabel">Skills</div>
+        <div class="skill-rows">
+          <div class="skill-row"><div class="scat">Research</div><div class="stags"><span class="stag">Qualitative Research</span><span class="stag">Oral History</span><span class="stag">Field Interviews</span><span class="stag">Case Study Analysis</span></div></div>
+          <div class="skill-row"><div class="scat">Administration</div><div class="stags"><span class="stag">Institutional Coordination</span><span class="stag">Academic Scheduling</span><span class="stag">Digital Documentation</span></div></div>
+          <div class="skill-row"><div class="scat">Sustainability</div><div class="stags"><span class="stag">Environmental Programs</span><span class="stag">Community Awareness</span><span class="stag">Green Practices</span></div></div>
+          <div class="skill-row"><div class="scat">Languages</div><div class="stags"><span class="stag">Marathi — Native</span><span class="stag">Hindi — Fluent</span><span class="stag">English — Proficient</span></div></div>
+        </div>
+      </div>
+
+      <div class="sb full reveal" id="volunteer">
+        <div class="blabel">Leadership &amp; Volunteer Experience</div>
+        <div class="vol-entry">
+          <div class="vol-title">Community Engagement Initiatives — Volunteer Coordinator</div>
+          <div class="vol-period">Wardha, Maharashtra · 2021 – 2023</div>
+          <ul class="vol-points">
+            <li>Coordinated educational workshops in rural schools and career guidance sessions with government officials and student leaders.</li>
+            <li>Founded a community library during COVID-19 to sustain learning access for rural youth in the Wardha district.</li>
+            <li>Led team execution at the National Rural Youth Festival ensuring smooth programme coordination.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cta-block reveal" id="contact">
+        <div class="cta-trees">🌳🌲🌿</div>
+        <div>
+          <div class="cta-title">Let's Work Together 🌿</div>
+          <div class="cta-sub">Available for research roles, community projects, sustainability initiatives, and social development opportunities.</div>
+        </div>
+        <div class="cta-btns">
+          <a href="mailto:mohan.kannake9@gmail.com" class="cbtn cbtn-p">✉️ Email Me</a>
+          <a href="https://www.linkedin.com/in/mohan-kannake" target="_blank" class="cbtn cbtn-g">
+            <svg style="width:14px;height:14px;fill:#fff;flex-shrink:0" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+/* ═══════════════════════
+   LEAF CANVAS
+═══════════════════════ */
+const lc = document.getElementById('leaf-cv');
+const lx = lc.getContext('2d');
+function rsL(){ lc.width=innerWidth; lc.height=innerHeight; }
+rsL(); addEventListener('resize',rsL);
+const leaves = Array.from({length:26},()=>({
+  x:Math.random()*innerWidth, y:Math.random()*innerHeight,
+  sz:Math.random()*14+7, vx:(Math.random()-.5)*.35, vy:Math.random()*.4+.1,
+  rot:Math.random()*Math.PI*2, vr:(Math.random()-.5)*.013,
+  op:Math.random()*.13+.04,
+  col:['#2d6a4f','#40916c','#74c69d','#52b788','#1b4332'][Math.floor(Math.random()*5)]
+}));
+function drawLeaf(x,y,s,r,c,o){
+  lx.save(); lx.globalAlpha=o; lx.translate(x,y); lx.rotate(r);
+  lx.fillStyle=c; lx.beginPath();
+  lx.moveTo(0,-s/2); lx.bezierCurveTo(s/2,-s/2,s/2,s/2,0,s/2);
+  lx.bezierCurveTo(-s/2,s/2,-s/2,-s/2,0,-s/2); lx.fill(); lx.restore();
+}
+
+/* ═══════════════════════
+   BIRD CANVAS
+═══════════════════════ */
+const bc = document.getElementById('bird-cv');
+const bx = bc.getContext('2d');
+function rsB(){ bc.width=innerWidth; bc.height=innerHeight; }
+rsB(); addEventListener('resize',rsB);
+
+function drawBird(ctx,x,y,sc,flap,col,alpha){
+  ctx.save();
+  ctx.globalAlpha=alpha;
+  ctx.translate(x,y);
+  ctx.scale(sc,sc);
+  ctx.strokeStyle=col;
+  ctx.lineWidth=1.6;
+  ctx.lineCap='round';
+  /* body */
+  ctx.beginPath();
+  ctx.ellipse(0,0,4,2,0,0,Math.PI*2);
+  ctx.fillStyle=col;
+  ctx.fill();
+  /* wings — each side is a bezier that arcs up/down based on flap 0-1 */
+  const wY = -flap*9 + 1;
+  ctx.beginPath();
+  /* left wing */
+  ctx.moveTo(-3,0);
+  ctx.quadraticCurveTo(-12, wY, -22, flap*2);
+  /* right wing */
+  ctx.moveTo(3,0);
+  ctx.quadraticCurveTo(12, wY, 22, flap*2);
+  ctx.stroke();
+  /* tail */
+  ctx.beginPath();
+  ctx.moveTo(-4,0);
+  ctx.lineTo(-9,3);
+  ctx.moveTo(-4,0);
+  ctx.lineTo(-9,-1);
+  ctx.stroke();
+  ctx.restore();
+}
+
+const BCOLS=['#2d6a4f','#40916c','#52b788','#1b4332','#74c69d','#6b5b3e','#8b6f47'];
+const birds = Array.from({length:11},(_,i)=>{
+  const right=Math.random()>.5;
+  const baseY=50+Math.random()*(innerHeight*.42);
+  return {
+    x: right ? -80 : innerWidth+80,
+    baseY, y:baseY,
+    spd:(Math.random()*1.1+.55)*(right?1:-1),
+    fp:Math.random()*Math.PI*2,
+    fspd:Math.random()*.11+.07,
+    sc:Math.random()*.65+.5,
+    col:BCOLS[Math.floor(Math.random()*BCOLS.length)],
+    alpha:Math.random()*.3+.22,
+    amp:Math.random()*16+6,
+    t:Math.random()*100
+  };
+});
+
+/* ═══════════════════════
+   BLOOMING FLOWERS
+═══════════════════════ */
+const FSCHEMES=[
+  {p:'#f9a8d4',c:'#fbbf24'},{p:'#fde68a',c:'#f97316'},
+  {p:'#c4b5fd',c:'#7c3aed'},{p:'#fed7aa',c:'#e53e3e'},
+  {p:'#bfdbfe',c:'#3b82f6'},{p:'#bbf7d0',c:'#16a34a'},
+  {p:'#fecdd3',c:'#f43f5e'},{p:'#fef08a',c:'#ca8a04'}
+];
+function mkFlower(container,xp,delay,stemH,nPetals,scheme,sz){
+  const fl=document.createElement('div');
+  fl.className='flower';
+  fl.style.cssText='left:'+xp+'%;--fd:'+delay+'s;--sd:'+(Math.random()*2.5).toFixed(1)+'s;transform:translateY(40px)';
+  const stem=document.createElement('div');
+  stem.className='flower-stem';
+  stem.style.cssText='height:'+stemH+'px';
+  const head=document.createElement('div');
+  head.className='flower-head';
+  head.style.cssText='width:'+(sz*2)+'px;height:'+(sz*2)+'px';
+  for(let i=0;i<nPetals;i++){
+    const angle=(360/nPetals)*i;
+    const pd=(delay+.2+i*.09).toFixed(2);
+    const p=document.createElement('div');
+    p.className='petal';
+    p.style.cssText='width:'+(sz*.88)+'px;height:'+(sz*1.55)+'px;background:'+scheme.p+';--pr:'+angle+'deg;--pd:'+pd+'s;top:'+(-sz*.5)+'px;left:'+(sz*.06)+'px;box-shadow:0 2px 8px rgba(0,0,0,.07)';
+    head.appendChild(p);
+  }
+  const cen=document.createElement('div');
+  cen.className='fcenter';
+  cen.style.cssText='width:'+(sz*.72)+'px;height:'+(sz*.72)+'px;background:'+scheme.c+';--cd:'+(delay+1.2).toFixed(1)+'s;box-shadow:0 0 8px '+scheme.c+'99';
+  head.appendChild(cen);
+  stem.appendChild(head);
+  fl.appendChild(stem);
+  container.appendChild(fl);
+}
+(function plantFlowers(){
+  const ff=document.getElementById('flower-field');
+  const pos=[
+    {x:1.5,d:.3,h:58,p:5,s:7},{x:3,d:.6,h:72,p:6,s:9},{x:4.5,d:.9,h:50,p:5,s:6},
+    {x:6,d:1.1,h:66,p:7,s:8},{x:7.5,d:.4,h:54,p:5,s:7},{x:9,d:.8,h:78,p:6,s:10},
+    {x:10.5,d:1.3,h:60,p:5,s:7},{x:12,d:.2,h:45,p:5,s:6},
+    {x:87,d:1.5,h:62,p:6,s:8},{x:89,d:.7,h:52,p:5,s:7},{x:91,d:1.1,h:74,p:7,s:9},
+    {x:93,d:.4,h:57,p:5,s:7},{x:95,d:1.0,h:70,p:6,s:8},{x:97,d:1.6,h:47,p:5,s:6},
+    {x:30,d:2.1,h:44,p:5,s:6},{x:50,d:2.6,h:40,p:5,s:5},{x:70,d:1.9,h:46,p:6,s:6},
+  ];
+  pos.forEach(pos=>{
+    const sc=FSCHEMES[Math.floor(Math.random()*FSCHEMES.length)];
+    mkFlower(ff,pos.x,pos.d,pos.h,pos.p,sc,pos.s);
+  });
+})();
+
+/* ═══════════════════════
+   MASTER LOOP
+═══════════════════════ */
+(function loop(){
+  /* leaves */
+  lx.clearRect(0,0,lc.width,lc.height);
+  leaves.forEach(l=>{
+    l.x+=l.vx; l.y+=l.vy; l.rot+=l.vr;
+    if(l.y>lc.height+20){l.y=-20;l.x=Math.random()*lc.width;}
+    if(l.x<-20)l.x=lc.width+20; if(l.x>lc.width+20)l.x=-20;
+    drawLeaf(l.x,l.y,l.sz,l.rot,l.col,l.op);
+  });
+
+  /* birds */
+  bx.clearRect(0,0,bc.width,bc.height);
+  birds.forEach(b=>{
+    b.t+=.016; b.fp+=b.fspd;
+    const flap=(Math.sin(b.fp)+1)/2;
+    b.x+=b.spd;
+    b.y=b.baseY+Math.sin(b.t*.7)*b.amp;
+    if(b.spd>0&&b.x>bc.width+100){b.x=-80;b.baseY=50+Math.random()*(bc.height*.42);b.y=b.baseY;b.spd=Math.random()*1.1+.55;b.alpha=Math.random()*.3+.22;}
+    if(b.spd<0&&b.x<-100){b.x=bc.width+80;b.baseY=50+Math.random()*(bc.height*.42);b.y=b.baseY;b.spd=-(Math.random()*1.1+.55);b.alpha=Math.random()*.3+.22;}
+    bx.save();
+    if(b.spd<0){bx.translate(b.x*2,0);bx.scale(-1,1);}
+    drawBird(bx,b.x,b.y,b.sc,flap,b.col,b.alpha);
+    bx.restore();
+  });
+
+  requestAnimationFrame(loop);
+})();
+
+/* ═══════════════════════
+   COUNTERS
+═══════════════════════ */
+function animCount(el,target){
+  let v=0;
+  (function t(){v+=Math.ceil(target/30);if(v>=target){el.textContent=target+'+';return;}el.textContent=v;requestAnimationFrame(t);})();
+}
+new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(!e.isIntersecting)return;e.target.querySelectorAll('[data-count]').forEach(el=>animCount(el,+el.dataset.count));});
+},{threshold:.4}).observe(document.querySelector('.hero-stats'));
+
+/* ═══════════════════════
+   SCROLL REVEAL
+═══════════════════════ */
+const rIO=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');rIO.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>rIO.observe(el));
+
+/* ═══════════════════════
+   NAV + SCROLL
+═══════════════════════ */
+const mainEl=document.querySelector('.main');
+const secs=[...document.querySelectorAll('[id]')];
+const navs=[...document.querySelectorAll('.ni')];
+mainEl.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(s.offsetTop-mainEl.scrollTop-160<=0)cur=s.id;});
+  navs.forEach(n=>n.classList.toggle('active',n.getAttribute('href')==='#'+cur));
+});
+navs.forEach(n=>{n.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(n.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});});});
+</script>
+</body>
+</html>
